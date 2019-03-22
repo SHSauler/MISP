@@ -91,9 +91,9 @@ class ApacheAuthenticate extends BaseAuthenticate
             // example for searchFiler: '(objectclass=InetOrgPerson)(!(nsaccountlock=True))(memberOf=cn=misp,cn=groups,cn=accounts,dc=example,dc=com)'
             // example for searchAttribut: '(uuid=ApacheUser)'
             if (!empty($ldapSearchFilter)) {
-                $filter = '(&' . $ldapSearchFilter . '(' . Configure::read('ApacheSecureAuth.ldapSearchAttribut') . '=' . $_SERVER[$envvar] . '))';
+                $filter = '(&' . $ldapSearchFilter . '(' . Configure::read('ApacheSecureAuth.ldapSearchAttribut') . '=' . $mispUsername . '))';
             } else {
-                $filter = '(' . Configure::read('ApacheSecureAuth.ldapSearchAttribut') . '=' . $_SERVER[$envvar] . ')';
+                $filter = '(' . Configure::read('ApacheSecureAuth.ldapSearchAttribut') . '=' . $mispUsername . ')';
             }
             // example: mail
             $getLdapUserInfo = Configure::read('ApacheSecureAuth.ldapFilter');
