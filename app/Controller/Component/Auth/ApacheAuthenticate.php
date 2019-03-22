@@ -71,7 +71,7 @@ class ApacheAuthenticate extends BaseAuthenticate
 	// From config.php's ApacheSecureAuth.apacheEnv via AppController
         $envvar = $this->settings['fields']['envvar'];
 	// In case the selected variable contains a DN instead of a CN, the CN is extracted
-        $mispUsername = $this->getCnofDN($_SERVER[$envvar]);
+        $mispUsername = $this->getCNofDN($_SERVER[$envvar]);
 
         // make LDAP request to get user email required for MISP auth
         $ldapdn = Configure::read('ApacheSecureAuth.ldapDN');
