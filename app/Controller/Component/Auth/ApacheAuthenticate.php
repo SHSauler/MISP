@@ -50,12 +50,20 @@ class ApacheAuthenticate extends BaseAuthenticate
         return NULL;
     }
 
+    private function getCNofDN($dn)
+    {
+        $return=preg_match('/[^cn=]([^,]*)/i',$dn,$dn);
+        return($dn[0]);
+    }
+
     public function authenticate(CakeRequest $request, CakeResponse $response)
     {
 
         // Get information user for MISP auth
+	// From config.php's ApacheSecureAuth.apacheEnv via AppController
         $envvar = $this->settings['fields']['envvar'];
-        $mispUsername = $_SERVER[$envvar];
+	// In case the selected variable contains a DN instead of a CN, the CN is extracted
+        $mispUsername = $this->getCnofDN($_SERVER[$envvar]);
 
         // make LDAP request to get user email required for MISP auth
         $ldapdn = Configure::read('ApacheSecureAuth.ldapDN');
