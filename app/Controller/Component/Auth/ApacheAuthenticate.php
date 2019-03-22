@@ -58,6 +58,14 @@ class ApacheAuthenticate extends BaseAuthenticate
 
     public function authenticate(CakeRequest $request, CakeResponse $response)
     {
+        // Support for reverse proxy IP restriction
+        // If ReverseProxyIP is set, the REMOTE_ADDR must match ReverseProxyIP
+        if (Configure::read('ApacheSecureAuth.reverseProxyIP')){
+            $reverseProxyIP = Configure::read('ApacheSecureAuth.reverseProxyIP');
+            if ($_SERVER['REMOTE_ADDR'] != $reverseProxyIP){
+                die('The client IP does not match the reverse proxy IP.');
+            }
+        }
 
         // Get information user for MISP auth
 	// From config.php's ApacheSecureAuth.apacheEnv via AppController
